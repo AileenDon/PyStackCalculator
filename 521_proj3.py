@@ -55,6 +55,20 @@ prefix_expression = infix_to_prefix(infix)
 print(f"Infix: {infix}")
 print(f"Prefix: {prefix_expression}")
 
+# Test multiple infix expressions from given doc
+expressions = [
+    "(a + b)",
+    "(x+y-z)",
+    "((x+y-z)/u+v)",
+    "((x+y-z)/u+v*w)",
+    "(-a + b)",
+    "(x-(-y)+ z)",
+    "a",
+    "-b"
+]
+for expr in expressions:
+    print(f"Infix: {expr}")
+    print(f"Prefix: {infix_to_prefix(expr)}")
 
 # Extra Credits: check the balances of the parenthesis
 def check_parentheses_balance(expr):
