@@ -64,6 +64,13 @@ Here are some example expressions and their expected results:
 - `* 127 2`: Overflow error expected
 - `/ -128 -2`: Overflow error expected
 
+### Balanced Parentheses
+
+The program also checks for balanced parentheses in expressions. For example:
+- `(+ 10 (* 20 30))`: Balanced
+- `(+ 10 (* 20 30)`: Unbalanced (missing closing parenthesis)
+- `(+ 10 (* 20 30)) )`: Unbalanced (extra closing parenthesis)
+
 ### Screenshots
 
 
