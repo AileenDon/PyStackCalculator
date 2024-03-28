@@ -1,17 +1,23 @@
+# Handle certain input
+def check_valid_input(expr):
+   
+    return
+
 # Translate infix into prefix expressions
 def infix_to_prefix(expression):
-    def precedence(op):
-        if op in ('+', '-'):
-            return 1
-        if op in ('*', '/'):
-            return 2
-        return 0
 
     def reverse_expression(expr):
         # Reverse the expression
         expr = expr[::-1]
         expr = expr.replace('(', 'temp').replace(')', '(').replace('temp', ')')
         return expr
+    
+    def precedence(op):
+        if op in ('+', '-'):
+            return 1
+        if op in ('*', '/'):
+            return 2
+        return 0
 
     def handle_unary_minus(expr):
         # Convert negative sign to '^'
@@ -24,23 +30,30 @@ def infix_to_prefix(expression):
         return ''.join(new_expr)
 
     def infix_to_prefix_process(expr):
+        # Convert the modified expression into prefix notation
         stack = []
         output = []
         for char in expr:
-            if char.isalpha() or char.isdigit():
+            if char.isalpha() or char.isdigit()or char == '^':
                 output.append(char)
-            elif char == '(':
+            elif char == '(' :
                 stack.append('(')
             elif char == ')':
                 while stack and stack[-1] != '(':
+                    output.append(" ")
                     output.append(stack.pop())
                 if stack: stack.pop()
+            elif char ==' ':
+                continue;
             else:
+                output.append(" ")
                 while stack and precedence(char) < precedence(stack[-1]):
                     output.append(stack.pop())
                 stack.append(char)
         while stack:
+            output.append(" ")
             output.append(stack.pop())
+
         return ''.join(output)
 
     # Process the expression
@@ -48,27 +61,49 @@ def infix_to_prefix(expression):
     prefix = reverse_expression(reverse_expr)
     return prefix
 
+def evaluate_prefix(expression):
+    # Evaluate a prefix expression
+    stack =[]
+    operators = set(['+', '-', '*', '/'])
+    expression = expression.split()[::-1]  
 
-# Test the infix_to_prefix function
-infix = "-b"
-prefix_expression = infix_to_prefix(infix)
-print(f"Infix: {infix}")
-print(f"Prefix: {prefix_expression}")
+    for token in expression:
+        if token.isdigit() :
+            stack.append(int(token))
+        elif token.startswith('^'): 
+            stack.append(-int(token[1:]))
+        elif token in operators:
+            operand1 = stack.pop()
+            operand2 = stack.pop()
+            if token == '+':
+                result = operand1 + operand2
+            elif token == '-':
+                result = operand1 - operand2
+            elif token == '*':
+                result = operand1 * operand2
+            elif token == '/':
+                result = operand1 // operand2  
+            stack.append(result)
+        else:
+            raise ValueError("Invalid token in expression")
 
-# Test multiple infix expressions from given doc
-expressions = [
-    "(a + b)",
-    "(x+y-z)",
-    "((x+y-z)/u+v)",
-    "((x+y-z)/u+v*w)",
-    "(-a + b)",
-    "(x-(-y)+ z)",
-    "a",
-    "-b"
-]
-for expr in expressions:
-    print(f"Infix: {expr}")
-    print(f"Prefix: {infix_to_prefix(expr)}")
+    return stack.pop()
+
+def check_overflow(result):
+    # Check for overflow in the evaluation result
+    if result < -128 or result > 127:
+        result = (result + 128) % 256 - 128
+        print("Overflow occurs!", f"Output value: {result}")
+        return True  
+    return False
+
+def evaluate_expression(expression):
+    # converts an infix expression to prefix notation, evaluates it, and checks for overflow
+    result = evaluate_prefix(expression)
+    if not check_overflow(result):
+        return result
+    else:
+        return "Overflow occurred; result not valid."
 
 # Extra Credits: check the balances of the parenthesis
 def check_parentheses_balance(expr):
@@ -82,15 +117,35 @@ def check_parentheses_balance(expr):
             stack.pop()
     return len(stack) == 0
 
+# Test multiple infix expressions from given doc
+expressions = [
+    "(40+50)",
+    "45+(-50)",
+    "80+80",
+    "((-36)+107)*5",
+    "(-50)-122",
+    "(-33)*3",
+    "101*61",
+    "(-101)*61",
+    "(-70)/3",
+    "(-120)/(-34)"
+    # "-(-(-(1)))",
+    # "-(1+2)",
+    # "1--2"
+]
 
-# Check the check_parentheses_balance function
-if check_parentheses_balance(infix):
-    print(f"The expression '{infix}' has balanced parentheses.")
-else:
-    print(f"Error: The expression  '{infix}' has unbalanced parentheses.")
+for inf in expressions:
 
-expression = "(-a + b))"
-if check_parentheses_balance(expression):
-    print(f"The expression '{expression}' has balanced parentheses.")
-else:
-    print(f"Error: The expression  '{expression}' has unbalanced parentheses.")
+    if check_parentheses_balance(inf):
+        print(f"The expression '{inf}' has balanced parentheses.")
+    else:
+        print(f"Error: The expression  '{inf}' has unbalanced parentheses.")
+    
+    prefix_expression = infix_to_prefix(inf)
+    print(f"Prefix: {prefix_expression}")
+
+    try:
+        result = evaluate_expression(prefix_expression)
+        print("Result:", result)
+    except (ValueError, OverflowError) as e:
+        print("Error:", e)
