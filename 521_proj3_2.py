@@ -9,13 +9,23 @@ class Stack:
         self.items.append(item)
 
     def pop(self):
-        return self.items.pop()
+        if not self.is_empty():
+            return self.items.pop()
+        else:
+            raise IndexError("pop from empty stack")
 
     def peek(self):
-        return self.items[-1]
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            raise IndexError("peek from empty stack")
 
     def size(self):
         return len(self.items)
+    
+    def append(self, item):
+        self.push(item)
+
 
 
 def evaluate_prefix(expression):
@@ -24,8 +34,10 @@ def evaluate_prefix(expression):
     expression = expression.split()[::-1]  # Reverse the expression to evaluate from left to right
 
     for token in expression:
-        if token.isdigit() or (token[0] == '-' and token[1:].isdigit()): # Checking for negative numbers
+        if token.isdigit() :
             stack.push(int(token))
+        elif token.startswith('^'): 
+            stack.append(-int(token[1:]))
         elif token in operators:
             operand1 = stack.pop()
             operand2 = stack.pop()
@@ -36,7 +48,7 @@ def evaluate_prefix(expression):
             elif token == '*':
                 result = operand1 * operand2
             elif token == '/':
-                result = operand1 // operand2  # Integer division
+                result = operand1 // operand2  
             stack.push(result)
         else:
             raise ValueError("Invalid token in expression")
