@@ -61,8 +61,8 @@ def infix_to_prefix(expression):
     prefix = reverse_expression(reverse_expr)
     return prefix
 
-def evaluate_prefix(expression):
-    # Evaluate a prefix expression
+# Evaluate a prefix expression
+def evaluate_prefix(expression):   
     stack =[]
     operators = set(['+', '-', '*', '/'])
     expression = expression.split()[::-1]  
@@ -89,16 +89,16 @@ def evaluate_prefix(expression):
 
     return stack.pop()
 
+# Check for overflow in the evaluation result
 def check_overflow(result):
-    # Check for overflow in the evaluation result
     if result < -128 or result > 127:
         result = (result + 128) % 256 - 128
         print("Overflow occurs!", f"Output value: {result}")
         return True  
     return False
 
+# converts an infix expression to prefix notation, evaluates it, and checks for overflow
 def evaluate_expression(expression):
-    # converts an infix expression to prefix notation, evaluates it, and checks for overflow
     result = evaluate_prefix(expression)
     if not check_overflow(result):
         return result
