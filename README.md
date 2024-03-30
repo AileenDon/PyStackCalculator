@@ -31,6 +31,7 @@ Note: `^` is used to denote a unary minus for clarity in the prefix expressions.
 Here are some example expressions and their results:
 
 <img width="403" alt="Screenshot 2024-03-29 at 11 18 25 PM" src="https://github.com/AileenDon/521_proj3/assets/120889846/0afd97c6-d942-4b2b-97b1-b4efad5bf811">
+<img width="392" alt="Screenshot 2024-03-29 at 11 22 27 PM" src="https://github.com/AileenDon/521_proj3/assets/120889846/afdfa1b4-159e-4c8c-86df-8276ead9b9f1">
 
 ### Overflow scenarios:
 
