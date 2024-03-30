@@ -71,7 +71,13 @@ def evaluate_prefix(expression):
         if token.isdigit() :
             stack.append(int(token))
         elif token.startswith('^'): 
-            stack.append(-int(token[1:]))
+            # Handle multiple ^ symbols 
+            negation_count = len(token) - len(token.lstrip('^'))
+            sign = -1 if negation_count % 2 != 0 else 1
+            if token[negation_count:].isdigit():
+                stack.append(sign * int(token[negation_count:]))
+            else:
+                raise ValueError("Invalid token in expression: " + token)
         elif token in operators:
             operand1 = stack.pop()
             operand2 = stack.pop()
@@ -119,17 +125,17 @@ def check_parentheses_balance(expr):
 
 # Test multiple infix expressions from given doc
 expressions = [
-    "(40+50)",
-    "45+(-50)",
-    "80+80",
-    "((-36)+107)*5",
-    "(-50)-122",
-    "(-33)*3",
-    "101*61",
-    "(-101)*61",
-    "(-70)/3",
-    "(-120)/(-34)"
-    # "-(-(-(1)))",
+    # "(40+50)",
+    # "45+(-50)",
+    # "80+80",
+    # "((-36)+107)*5",
+    # "(-50)-122",
+    # "(-33)*3",
+    # "101*61",
+    # "(-101)*61",
+    # "(-70)/3",
+    # "(-120)/(-34)"
+    "-(-(1))",
     # "-(1+2)",
     # "1--2"
 ]
