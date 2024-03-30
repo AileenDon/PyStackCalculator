@@ -138,29 +138,9 @@ def check_parentheses_balance(expr):
             stack.pop()
     return len(stack) == 0
 
-# Test multiple infix expressions from given doc
-expressions = [
-    "(40+50)",
-    "45+(-50)",
-    "80+80",
-    "((-36)+107)*5",
-    "(-50)-122",
-    "(-33)*3",
-    "101*61",
-    "(-101)*61",
-    "(-70)/3",
-    "(-120)/(-34)",
-    # "-(-(1))",
-    # "-((-(1))",
-    # "-(-(1))+(-1))"
-    # "-(1+2)",
-    # "-1-+2",
-    # "1--2",
-    # "1+-2"
-]
-
-for inf in expressions:
-    print("————————————————————————————")
+# Ask for input, and evaluate 
+def main():
+    inf = input("Enter a prefix expression: ")
     if check_valid_input(inf):
         print(f"Expression '{inf}' is valid.")
         
@@ -180,3 +160,48 @@ for inf in expressions:
 
     else:
         print(f"Expression '{inf}' is not valid. Please give a valid input.")
+main()
+
+
+# # Test multiple infix expressions from given doc
+# expressions = [
+#     "(40+50)",
+#     "45+(-50)",
+#     "80+80",
+#     "((-36)+107)*5",
+#     "(-50)-122",
+#     "(-33)*3",
+#     "101*61",
+#     "(-101)*61",
+#     "(-70)/3",
+#     "(-120)/(-34)",
+#     "-(-(1))",
+#     "-((-(1))",
+#     "-(-(1))+(-1))"
+#     "-(1+2)",
+#     "-1-+2",
+#     "1--2",
+#     "1+-2"
+# ]
+
+# for inf in expressions:
+#     print("————————————————————————————")
+#     if check_valid_input(inf):
+#         print(f"Expression '{inf}' is valid.")
+        
+#         if check_parentheses_balance(inf):
+#             print(f"The expression '{inf}' has balanced parentheses.")
+#         else:
+#             print(f"Error: The expression  '{inf}' has unbalanced parentheses.")
+        
+#         prefix_expression = infix_to_prefix(inf)
+#         print(f"Prefix: {prefix_expression}")
+
+#         try:
+#             result = evaluate_expression(prefix_expression)
+#             print("Result:", result)
+#         except (ValueError, OverflowError) as e:
+#             print("Error:", e)
+
+#     else:
+#         print(f"Expression '{inf}' is not valid. Please give a valid input.")
