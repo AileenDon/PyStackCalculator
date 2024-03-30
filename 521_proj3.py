@@ -1,7 +1,22 @@
 # Handle certain input
 def check_valid_input(expr):
-   
-    return
+    expr = expr.replace(" ", "")
+    
+    # Check if the expression starts with an allowed unary minus
+    if expr.startswith('-'):
+        if len(expr) > 1 and not expr[1].isdigit() and expr[1] != '(':
+            return False
+    
+    # Iterate through the expression to check for invalid patterns
+    for i in range(1, len(expr)):
+        if expr[i] in "+-*/" and expr[i-1] in "+-*/":
+            if not ((expr[i] == '-' and expr[i-1] == '(') or (expr[i] == '-' and expr[i-1] == ')')):
+                return False
+        
+        if expr[i] == '-' and not (expr[i-1] == '(' or expr[i-1] == ')' or expr[i-1].isdigit()):
+            return False
+            
+    return True
 
 # Translate infix into prefix expressions
 def infix_to_prefix(expression):
@@ -103,7 +118,7 @@ def check_overflow(result):
         return True  
     return False
 
-# converts an infix expression to prefix notation, evaluates it, and checks for overflow
+# Evaluates it, and checks for overflow
 def evaluate_expression(expression):
     result = evaluate_prefix(expression)
     if not check_overflow(result):
@@ -125,33 +140,43 @@ def check_parentheses_balance(expr):
 
 # Test multiple infix expressions from given doc
 expressions = [
-    # "(40+50)",
-    # "45+(-50)",
-    # "80+80",
-    # "((-36)+107)*5",
-    # "(-50)-122",
-    # "(-33)*3",
-    # "101*61",
-    # "(-101)*61",
-    # "(-70)/3",
-    # "(-120)/(-34)"
-    "-(-(1))",
+    "(40+50)",
+    "45+(-50)",
+    "80+80",
+    "((-36)+107)*5",
+    "(-50)-122",
+    "(-33)*3",
+    "101*61",
+    "(-101)*61",
+    "(-70)/3",
+    "(-120)/(-34)",
+    # "-(-(1))",
+    # "-((-(1))",
+    # "-(-(1))+(-1))"
     # "-(1+2)",
-    # "1--2"
+    # "-1-+2",
+    # "1--2",
+    # "1+-2"
 ]
 
 for inf in expressions:
+    print("————————————————————————————")
+    if check_valid_input(inf):
+        print(f"Expression '{inf}' is valid.")
+        
+        if check_parentheses_balance(inf):
+            print(f"The expression '{inf}' has balanced parentheses.")
+        else:
+            print(f"Error: The expression  '{inf}' has unbalanced parentheses.")
+        
+        prefix_expression = infix_to_prefix(inf)
+        print(f"Prefix: {prefix_expression}")
 
-    if check_parentheses_balance(inf):
-        print(f"The expression '{inf}' has balanced parentheses.")
+        try:
+            result = evaluate_expression(prefix_expression)
+            print("Result:", result)
+        except (ValueError, OverflowError) as e:
+            print("Error:", e)
+
     else:
-        print(f"Error: The expression  '{inf}' has unbalanced parentheses.")
-    
-    prefix_expression = infix_to_prefix(inf)
-    print(f"Prefix: {prefix_expression}")
-
-    try:
-        result = evaluate_expression(prefix_expression)
-        print("Result:", result)
-    except (ValueError, OverflowError) as e:
-        print("Error:", e)
+        print(f"Expression '{inf}' is not valid. Please give a valid input.")
