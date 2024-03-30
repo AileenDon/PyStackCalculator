@@ -4,12 +4,12 @@
 
 A utility for parsing infix arithmetic expressions and converting them to prefix notation, specifically designed for 8-bit signed integers. Includes a feature to check for balanced parentheses.
 
-### Features
+## Features
 
 - Parses infix expressions with operators (`+`, `-`, `*`, `/`).
 - Converts infix to prefix notation while handling negative numbers and operator precedence.
 
-### Test Outputs
+### Converts infix to prefix notation
 
 The following table shows various infix expressions and their corresponding prefix conversions tested with the utility:
 
@@ -26,57 +26,30 @@ The following table shows various infix expressions and their corresponding pref
 
 Note: `^` is used to denote a unary minus for clarity in the prefix expressions.
 
-### Usage
+### Evaluate prefix expression
 
-Modify input expression in the code for temperory easy test, will modify in the future.
+Here are some example expressions and their results:
 
-## Extra Credits: Checking Parentheses Balance
+<img width="403" alt="Screenshot 2024-03-29 at 11 18 25 PM" src="https://github.com/AileenDon/521_proj3/assets/120889846/0afd97c6-d942-4b2b-97b1-b4efad5bf811">
 
-Checks for balanced parentheses, outputting an error message for unbalanced expressions.
+### Overflow scenarios:
 
-### Test Output
+<img width="398" alt="Screenshot 2024-03-29 at 11 13 24 PM" src="https://github.com/AileenDon/521_proj3/assets/120889846/f63f993c-355f-4908-86e3-78e16812d627">
 
-- The expression '-b' has balanced parentheses.
-- Error: The expression '(-a + b))' has unbalanced parentheses.
+### A few assumptions concerning valid input and the handling of certain input:
 
-
-
-Enter a prefix expression when prompted and press Enter.
-
-## Example Expressions
-
-Here are some example expressions and their expected results:
-
-1. `+ 10 20` => `30`
-2. `- 30 10` => `20`
-3. `* 5 6`   => `30`
-4. `/ 20 5`  => `4`
-5. `+ 10 * -3 4` => `-2`
-6. `- -10 5`    => `-15`
-7. `+ 10 * 2 - 6 4`  => `18`
-8. `/ * 10 2 + 5 - 20 10` => `5`
-
-## Testing
-
-### Additional Test Cases
-
-1. Overflow scenarios:
-- `* 127 2`: Overflow error expected
-- `/ -128 -2`: Overflow error expected
-
-### Balanced Parentheses
-
-The program also checks for balanced parentheses in expressions. For example:
-- `(+ 10 (* 20 30))`: Balanced
-- `(+ 10 (* 20 30)`: Unbalanced (missing closing parenthesis)
-- `(+ 10 (* 20 30)) )`: Unbalanced (extra closing parenthesis)
+<img width="425" alt="Screenshot 2024-03-29 at 11 09 25 PM" src="https://github.com/AileenDon/521_proj3/assets/120889846/43c0fdf3-8670-486d-9299-397d667bf704">
 
 ### Screenshots
 
-
-<img width="239" alt="image" src="https://github.com/AileenDon/521_proj3/assets/158865231/888ab4c1-1b1a-458d-8ac6-1c073e8c7386">
-
 <img width="238" alt="image" src="https://github.com/AileenDon/521_proj3/assets/158865231/b0075f69-f661-47d1-adac-da4e32119806">
 
+### Extra Credits: Balanced Parentheses
 
+The program also checks for balanced parentheses in expressions. For example:
 
+- The expression '-b' has balanced parentheses.
+- Error: The expression '(-a + b))' has unbalanced parentheses.
+- Checks for balanced parentheses, outputting an error message for unbalanced expressions.
+
+<img width="473" alt="Screenshot 2024-03-29 at 11 16 03 PM" src="https://github.com/AileenDon/521_proj3/assets/120889846/6897cead-c0f7-4d09-9359-45ac58003786">
