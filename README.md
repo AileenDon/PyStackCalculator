@@ -64,8 +64,3 @@ To use this tool, simply run the main() function. The user will be prompted to e
 5. **Checks for and handles any overflow in the evaluation result.**
 6. **Displays the evaluation result or an error message if the input is invalid.**
 
-### Contribution
-- Aileen Dong:
-  Input Validation, Infix to Prefix Conversion, Parentheses Balance Check.
-- Ananya Kakumanu:
-  Prefix Expression Evaluation, Evaluate and Check Overflow.
